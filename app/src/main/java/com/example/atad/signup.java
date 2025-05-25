@@ -1,6 +1,8 @@
 package com.example.atad;
 
 import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +11,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class signup extends AppCompatActivity {
+
+    ImageButton signup;
+    EditText rg_password, rg_repassword, rg_email, rg_username;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

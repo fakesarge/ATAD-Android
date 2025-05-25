@@ -8,27 +8,6 @@
     android:background="@drawable/signup"
     tools:context=".signup">
 
-    <ImageView
-        android:id="@+id/inputfeildone"
-        android:layout_width="@dimen/_270sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:src="@drawable/input"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
-
-    <ImageView
-        android:id="@+id/inputfeildtwo"
-        android:layout_width="@dimen/_270sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:src="@drawable/input"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.563" />
 
     <ImageView
         android:id="@+id/inputfeildthree"
@@ -39,7 +18,55 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.34" />
+        app:layout_constraintVertical_bias="0.27" />
+
+    <ImageView
+        android:id="@+id/inputfeildtwo"
+        android:layout_width="@dimen/_270sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:src="@drawable/input"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.452" />
+
+    <ImageView
+        android:id="@+id/inputfeildone"
+        android:layout_width="@dimen/_270sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:src="@drawable/input"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.361" />
+
+    <ImageView
+        android:id="@+id/inputfeildthree2"
+        android:layout_width="@dimen/_270sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:src="@drawable/input"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.543" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:backgroundTint="#273253"
+        android:hint="Email"
+        android:inputType="text"
+        android:paddingLeft="@dimen/_40sdp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/inputfeildone"
+        app:layout_constraintEnd_toEndOf="@+id/inputfeildone"
+        app:layout_constraintStart_toStartOf="@+id/inputfeildone"
+        app:layout_constraintTop_toTopOf="@+id/inputfeildone"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/username"
@@ -50,14 +77,11 @@
         android:inputType="text"
         android:paddingLeft="@dimen/_40sdp"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/inputfeildone"
-        app:layout_constraintEnd_toEndOf="@+id/inputfeildone"
-        app:layout_constraintHorizontal_bias="0.418"
-        app:layout_constraintStart_toStartOf="@+id/inputfeildone"
-        app:layout_constraintTop_toTopOf="@+id/inputfeildone"
-        app:layout_constraintVertical_bias="0.456" />
-
-
+        app:layout_constraintBottom_toBottomOf="@+id/inputfeildthree"
+        app:layout_constraintEnd_toEndOf="@+id/inputfeildthree"
+        app:layout_constraintStart_toStartOf="@+id/inputfeildthree"
+        app:layout_constraintTop_toTopOf="@+id/inputfeildthree"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/imageView10"
@@ -97,13 +121,42 @@
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/inputfeildtwo"
         app:layout_constraintEnd_toEndOf="@+id/inputfeildtwo"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="@+id/inputfeildtwo"
         app:layout_constraintTop_toTopOf="@+id/inputfeildtwo"
-        app:layout_constraintVertical_bias="0.471" />
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/lockicon2"
+        android:layout_width="@dimen/_27sdp"
+        android:layout_height="@dimen/_27sdp"
+        android:layout_marginLeft="@dimen/_2sdp"
+        android:src="@drawable/lock"
+        app:layout_constraintBottom_toBottomOf="@+id/inputfeildthree2"
+        app:layout_constraintEnd_toEndOf="@+id/inputfeildtwo"
+        app:layout_constraintHorizontal_bias="0.018"
+        app:layout_constraintStart_toStartOf="@+id/inputfeildtwo"
+        app:layout_constraintTop_toTopOf="@+id/inputfeildthree2"
+        app:layout_constraintVertical_bias="0.529" />
+
+    <EditText
+        android:id="@+id/repassword"
+        android:layout_width="@dimen/_260sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:backgroundTint="#273253"
+        android:hint="Re Enter Password"
+        android:inputType="text"
+        android:paddingLeft="@dimen/_40sdp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/inputfeildthree2"
+        app:layout_constraintEnd_toEndOf="@+id/inputfeildtwo"
+        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintStart_toStartOf="@+id/inputfeildtwo"
+        app:layout_constraintTop_toTopOf="@+id/inputfeildthree2"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/signup"
         android:layout_width="173dp"
         android:layout_height="34dp"
         android:scaleX="2.1"
@@ -112,7 +165,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.652"
+        app:layout_constraintVertical_bias="0.651"
         app:srcCompat="@drawable/loginbutton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
