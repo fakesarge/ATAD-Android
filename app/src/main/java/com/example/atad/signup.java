@@ -1,5 +1,6 @@
 package com.example.atad;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,19 +17,19 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Firebase;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
 
 public class signup extends AppCompatActivity {
 
     ImageButton signup;
     EditText rg_password, rg_repassword, rg_email, rg_username;
     FirebaseAuth auth;
-
-
-
+    DatabaseReference database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,10 @@ public class signup extends AppCompatActivity {
             return insets;
         });
 
+        // Initialize Firebase Auth and Database
+        auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance().getReference();
+
         signup = findViewById(R.id.signup);
         rg_username = findViewById(R.id.username);
         rg_email = findViewById(R.id.email);
@@ -50,38 +55,60 @@ public class signup extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = rg_username.getText().toString();
-                String email = rg_email.getText().toString();
-                String password = rg_password.getText().toString();
-                String repassword = rg_password.getText().toString();
+                String name = rg_username.getText().toString().trim();
+                String email = rg_email.getText().toString().trim();
+                String password = rg_password.getText().toString().trim();
+                String repassword = rg_repassword.getText().toString().trim();
 
-                if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(repassword))
-                {
-                    Toast.makeText(signup.this, "Please Enter Valid Information", Toast.LENGTH_SHORT).show();
-
-                } else if(!password.equals(repassword)){
-                    Toast.makeText(signup.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-                } else
-                {
-                    auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful())
-                            {
-                                String id = task.getResult().getUser().getUid();
-//                                DatabaseReference reference = database.get
-                            }
-                        }
-                    });
+                if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) ||
+                        TextUtils.isEmpty(password) || TextUtils.isEmpty(repassword)) {
+                    Toast.makeText(signup.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                 }
+                else if (!password.equals(repassword)) {
+                    Toast.makeText(signup.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                }
+                else if (password.length() < 6) {
+                    Toast.makeText(signup.this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    // Create user with email and password
+                    auth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        // Get user ID from Firebase Auth
+                                        String userId = auth.getCurrentUser().getUid();
 
+                                        // Create a HashMap to store user data
+                                        HashMap<String, String> userMap = new HashMap<>();
+                                        userMap.put("userId", userId);
+                                        userMap.put("username", name);
+                                        userMap.put("email", email);
+                                        userMap.put("profileImage", "default");
+
+                                        // Save user data to Realtime Database
+                                        database.child("Users").child(userId).setValue(userMap)
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            Toast.makeText(signup.this, "Registration successful!", Toast.LENGTH_SHORT).show();
+                                                            Intent intent = new Intent(signup.this, login.class);
+                                                            startActivity(intent);
+                                                            finish(); // Close the signup activity
+                                                        } else {
+                                                            Toast.makeText(signup.this, "Failed to save user data: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
+                                    } else {
+                                        Toast.makeText(signup.this, "Registration failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                }
             }
         });
-
-
-
-
     }
-
-
 }
