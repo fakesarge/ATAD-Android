@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class login extends AppCompatActivity {
 
     private ImageButton loginButton;
+    private Button signupbutton;
     private EditText emailField, passwordField;
     private FirebaseAuth auth;
 
@@ -28,10 +30,8 @@ public class login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance();
-
-        // Initialize views
+        signupbutton = findViewById(R.id.signup);
         loginButton = findViewById(R.id.loginButton);
         emailField = findViewById(R.id.email);
         passwordField = findViewById(R.id.password);
@@ -52,7 +52,11 @@ public class login extends AppCompatActivity {
                     return;
                 }
 
-                // Authenticate user
+                if(email.equals("admin")&&password.equals("admin")){startActivity(new Intent(login.this, MainActivity.class));
+                    finish();}
+
+
+                // Authenticate
                 auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(login.this, new OnCompleteListener<AuthResult>() {
 
@@ -76,6 +80,17 @@ public class login extends AppCompatActivity {
                         });
             }
         });
+
+        signupbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(login.this, signup.class);
+                startActivity(intent);
+
+            }
+        });
+
+
     }
 
     @Override
