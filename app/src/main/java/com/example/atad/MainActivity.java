@@ -23,12 +23,11 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
-<<<<<<< HEAD
     private BottomNavigationView bottomNavigationView;
     private FrameLayout frameLayout;
-=======
+
     ImageButton open_password_gen;
->>>>>>> parent of 8d3a976 (m)
+
 
 
     @Override
@@ -43,21 +42,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
         auth = FirebaseAuth.getInstance();
-<<<<<<< HEAD
-=======
         open_password_gen = findViewById(R.id.openPassword);
 
 
->>>>>>> parent of 8d3a976 (m)
 
         // If the user is already logged in this wont happen. If the current user is null it will redirect.
         if (auth.getCurrentUser() == null){
             Intent intent = new Intent(MainActivity.this, login.class);
             startActivity(intent);
         }
-<<<<<<< HEAD
-        
-=======
+
 
 
         open_password_gen.setOnClickListener(new View.OnClickListener() {
@@ -67,11 +61,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
->>>>>>> parent of 8d3a976 (m)
-
 
 
 
