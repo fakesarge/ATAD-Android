@@ -9,7 +9,7 @@ public class LeakAPI {
     private String hashed,password,amountLeaked;
 
 
-    public boolean search(String password, boolean displayAmount) throws Exception
+    public String search(String password, boolean displayAmount) throws Exception
     {
         // Get passwords siffix and prefix
         this.password = password;
@@ -53,18 +53,16 @@ public class LeakAPI {
         String output = "";
 
         if (leaked) {
-            return true;
-//            output+="PASSWORD: "+password+" LEAKED: "+leaked;
+            output+="PASSWORD: "+password+" LEAKED: "+leaked;
         } else {
-            return false;
-//            output+="PASSWORD: "+password+" LEAKED: "+leaked;
+            output+="PASSWORD: "+password+" LEAKED: "+leaked;
         }
 
-//        if (displayAmount) {
-////            output+=" LEAKED AMOUNT: "+amountLeaked;
-//        }
+        if (displayAmount) {
+            output+=" LEAKED AMOUNT: "+amountLeaked;
+        }
 
-//        return output;
+        return output;
 
     }
 
