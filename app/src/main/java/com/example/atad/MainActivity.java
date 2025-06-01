@@ -23,6 +23,8 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
+    private BottomNavigationView bottomNavigationView;
+    private FrameLayout frameLayout;
 
 
     @Override

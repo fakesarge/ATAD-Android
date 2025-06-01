@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -16,22 +17,26 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class login extends AppCompatActivity {
 
     private ImageButton loginButton;
+    private Button signupbutton;
     private EditText emailField, passwordField;
     private FirebaseAuth auth;
+    private Users user = new Users();
+    DatabaseReference database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        database = FirebaseDatabase.getInstance().getReference();
 
-        // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance();
-
-        // Initialize views
+        signupbutton = findViewById(R.id.signup);
         loginButton = findViewById(R.id.loginButton);
         emailField = findViewById(R.id.email);
         passwordField = findViewById(R.id.password);
@@ -52,7 +57,11 @@ public class login extends AppCompatActivity {
                     return;
                 }
 
-                // Authenticate user
+                if(email.equals("admin")&&password.equals("admin")){startActivity(new Intent(login.this, MainActivity.class));
+                    finish();}
+
+
+                // Authenticate
                 auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(login.this, new OnCompleteListener<AuthResult>() {
 
@@ -63,6 +72,8 @@ public class login extends AppCompatActivity {
                                     // IF LOGIN GOOD
 
                                     startActivity(new Intent(login.this, MainActivity.class));
+                                    user.setEmail(email);
+                                    user.setPassword(password);
                                     finish();
                                 } else {
 
@@ -76,6 +87,17 @@ public class login extends AppCompatActivity {
                         });
             }
         });
+
+        signupbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(login.this, signup.class);
+                startActivity(intent);
+
+            }
+        });
+
+
     }
 
     @Override

@@ -42,7 +42,6 @@ public class signup extends AppCompatActivity {
             return insets;
         });
 
-        // Initialize Firebase Auth and Database
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance().getReference();
 
@@ -71,23 +70,21 @@ public class signup extends AppCompatActivity {
                     Toast.makeText(signup.this, "Password must be at least 6 characters", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    // Create user with email and password
                     auth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        // Get user ID from Firebase Auth
                                         String userId = auth.getCurrentUser().getUid();
 
-                                        // Create a HashMap to store user data
+                                        // hashMap to store user data
                                         HashMap<String, String> userMap = new HashMap<>();
                                         userMap.put("userId", userId);
                                         userMap.put("username", name);
                                         userMap.put("email", email);
                                         userMap.put("profileImage", "default");
 
-                                        // Save user data to Realtime Database
+                                        // saving data
                                         database.child("Users").child(userId).setValue(userMap)
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override

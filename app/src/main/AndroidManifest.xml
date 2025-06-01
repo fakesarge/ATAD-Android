@@ -13,6 +13,12 @@
         android:theme="@style/Theme.ATAD"
         tools:targetApi="31">
         <activity
+            android:name=".PasswordStorageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PasswordSearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".PasswordGenActivity"
             android:exported="false" />
         <activity
