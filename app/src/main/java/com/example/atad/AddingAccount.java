@@ -43,7 +43,8 @@ public class AddingAccount extends AppCompatActivity {
             SharedPreferences sharedPreferences = getSharedPreferences("PasswordPrefs", MODE_PRIVATE);
             int count = sharedPreferences.getInt("PasswordCount", 0);
 
-            // Save the new account
+
+            // This shared Pref is the way i saw it working the best.
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("account_title_" + count, title);
             editor.putString("account_password_" + count, password);

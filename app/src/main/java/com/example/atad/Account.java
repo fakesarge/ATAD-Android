@@ -27,11 +27,10 @@ public class Account {
         this.password = password;
     }
 
-    // Method to get masked password for display
     public String getMaskedPassword() {
         if (password == null || password.isEmpty()) {
             return "";
         }
-        return "••••••••"; // 8 dots to represent a password
+        return "••••••••";
     }
 }

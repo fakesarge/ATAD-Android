@@ -34,6 +34,7 @@
         android:id="@+id/email"
         android:layout_width="@dimen/_250sdp"
         android:layout_height="@dimen/_40sdp"
+        android:textColorHint="#808493"
         android:backgroundTint="#273253"
         android:hint="Email"
         android:inputType="text"
@@ -92,6 +93,7 @@
         android:backgroundTint="#273253"
         android:hint="Password"
         android:inputType="text"
+        android:textColorHint="#808493"
         android:paddingLeft="@dimen/_40sdp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -114,6 +116,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.713" />
+
+    <Button
+        android:id="@+id/forgotpass"
+        android:layout_width="131dp"
+        android:layout_height="21dp"
+        android:background="@android:color/transparent"
+        android:backgroundTintMode="screen"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.897"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.551" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleY="2"
+        android:scaleX="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.76"
+        app:srcCompat="@drawable/divide" />
+
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="182dp"
+        android:layout_height="86dp"
+        android:backgroundTint="@android:color/transparent"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:srcCompat="@drawable/google"
+        tools:layout_editor_absoluteX="36dp"
+        tools:layout_editor_absoluteY="696dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

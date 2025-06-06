@@ -34,7 +34,6 @@ public class PasswordStorageActivity extends AppCompatActivity {
 
 
 
-    // Replace your current ActivityResultLauncher with this:
     private final ActivityResultLauncher<Intent> addPasswordLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -44,7 +43,7 @@ public class PasswordStorageActivity extends AppCompatActivity {
                 }
             });
 
-    // Update your onCreate method to load passwords initially:
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +58,7 @@ public class PasswordStorageActivity extends AppCompatActivity {
             addPasswordLauncher.launch(intent);
         });
 
-        // Load passwords when activity starts
+        // lload passwords when activity starts
         loadPasswordsFromPreferences();
         displayPasswords();
     }
@@ -99,7 +98,6 @@ public class PasswordStorageActivity extends AppCompatActivity {
             return true;
         });
 
-        // Optional: Add click listener to reveal password temporarily
         passwordView.setOnClickListener(v -> {
             passwordTextView.setText(account.getPassword());
             passwordView.postDelayed(() -> passwordTextView.setText(account.getMaskedPassword()), 2000);

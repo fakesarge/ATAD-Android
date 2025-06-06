@@ -1,8 +1,11 @@
 package com.example.atad;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class login extends AppCompatActivity {
 
     private ImageButton loginButton;
-    private Button signupbutton;
+    private Button signupbutton, forgotpass;
     private EditText emailField, passwordField;
     private FirebaseAuth auth;
     private Users user = new Users();
@@ -35,11 +38,43 @@ public class login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         database = FirebaseDatabase.getInstance().getReference();
 
+
         auth = FirebaseAuth.getInstance();
         signupbutton = findViewById(R.id.signup);
         loginButton = findViewById(R.id.loginButton);
         emailField = findViewById(R.id.email);
         passwordField = findViewById(R.id.password);
+        forgotpass = findViewById(R.id.forgotpass);
+
+
+        forgotpass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String email = emailField.getText().toString().trim();
+
+                if (TextUtils.isEmpty(email)) {
+                    Toast.makeText(login.this,
+                            "Please enter a email",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful())
+                        {
+                            Toast.makeText(login.this,
+                                    "Email Sent",
+                                    Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                });
+
+            }
+        });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

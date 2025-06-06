@@ -1,78 +1,85 @@
 package com.example.atad;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.ProtocolException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 public class LeakAPI {
-    private String hashed,password,amountLeaked;
+
+    Boolean leaked;
+    public boolean search(String password) throws Exception {
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // Get passwords siffix and prefix
+                String hashedPassword = null;
+                try {
+                    hashedPassword = hashPasswordSHA1(password);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                String pf = hashedPassword.substring(0, 5);
+                String sf = hashedPassword.substring(5);
 
 
-    public boolean search(String password, boolean displayAmount) throws Exception
-    {
-        // Get passwords siffix and prefix
-        this.password = password;
-        String hashedPassword = this.hashPasswordSHA1(password);
-        System.out.println(hashedPassword);
-        String pf = hashedPassword.substring(0,5);
-        String sf = hashedPassword.substring(5);
+                String apiUrl = "https://api.pwnedpasswords.com/range/" + pf;
 
+                HttpURLConnection connection = null;
+                try {
+                    connection = (HttpURLConnection) new URL(apiUrl).openConnection();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                try {
+                    connection.setRequestMethod("GET");
+                } catch (ProtocolException e) {
+                    throw new RuntimeException(e);
+                }
 
-        //initialize the free api
-        String apiUrl = "https://api.pwnedpasswords.com/range/" + pf;
+                //Read the results of the API returning
+                BufferedReader reader = null;
+                try {
+                    reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                String line;
 
-        HttpURLConnection connection = (HttpURLConnection) new URL(apiUrl).openConnection();
-        connection.setRequestMethod("GET");
+                // Get the data and check if the password has been leaked
 
-        //Read the results of the API returning
-        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String line;
+                while (true) {
+                    try {
+                        if ((line = reader.readLine()) == null) break;
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    if (line.startsWith(sf.toUpperCase())) {
+                        leaked = true;
+                        break;
+                    }
+                }
 
-        // Get the data and check if the password has been leaked
-        boolean leaked = false;
-        String leakAmount = null;
-
-        //    	System.out.println("loop");
-        while ((line = reader.readLine()) != null) {
-//        	System.out.println("in");
-            if (line.startsWith(sf.toUpperCase())) {
-//            	System.out.println(line);
-//            	System.out.println(line.indexOf(':'));
-//            	System.out.println(line.substring(line.indexOf(':')+1,line.length()));
-                leakAmount = line.substring(line.indexOf(':')+1,line.length());
-                leaked = true;
-                break;
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
-        }
-        //	System.out.println("end");
-
-        reader.close();
-
-
-        String output = "";
-
-        if (leaked) {
-            return true;
-//            output+="PASSWORD: "+password+" LEAKED: "+leaked;
-        } else {
-            return false;
-//            output+="PASSWORD: "+password+" LEAKED: "+leaked;
-        }
-
-//        if (displayAmount) {
-////            output+=" LEAKED AMOUNT: "+amountLeaked;
-//        }
-
-//        return output;
-
+        });
+        thread.start();
+        return leaked;
     }
 
 
     // HASH THE PASSWORD - Not my code
     private static String hashPasswordSHA1(String password) throws Exception {
         MessageDigest digest = MessageDigest.getInstance("SHA-1");
-        byte[] hashBytes = digest.digest(password.getBytes("UTF-8"));
+        byte[] hashBytes = digest.digest(password.getBytes(StandardCharsets.UTF_8));
         StringBuilder hash = new StringBuilder();
         for (byte b : hashBytes) {
             hash.append(String.format("%02x", b));

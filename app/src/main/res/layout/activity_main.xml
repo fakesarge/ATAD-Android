@@ -23,7 +23,7 @@
         />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/logout"
         android:layout_width="@dimen/_100sdp"
         android:layout_height="@dimen/_50sdp"
         android:background="@android:color/transparent"

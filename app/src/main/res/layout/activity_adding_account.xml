@@ -9,6 +9,14 @@
     tools:context=".AddingAccount">
 
     <ImageView
+        android:id="@+id/imageView99"
+        android:layout_width="353dp"
+        android:layout_height="65dp"
+        app:srcCompat="@drawable/input"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="340dp" />
+
+    <ImageView
         android:id="@+id/imageView"
         android:layout_width="602dp"
         android:layout_height="454dp"
@@ -24,40 +32,56 @@
 
     <EditText
         android:id="@+id/titleEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="346dp"
+        android:layout_height="56dp"
         android:hint="Application Name"
+        android:textColorHint="#808493"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.455"></EditText>
+        app:layout_constraintVertical_bias="0.416"></EditText>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="353dp"
+        android:layout_height="65dp"
+        app:srcCompat="@drawable/input"
+        tools:layout_editor_absoluteX="29dp"
+        tools:layout_editor_absoluteY="434dp" />
 
     <EditText
         android:id="@+id/passwordEditText"
-        android:layout_width="409dp"
-        android:layout_height="158dp"
+        android:layout_width="346dp"
+        android:layout_height="56dp"
         android:hint="Password"
-        android:inputType="textMultiLine"
+        android:textColorHint="#808493"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.611"></EditText>
+        app:layout_constraintVertical_bias="0.53"></EditText>
 
     <Button
         android:id="@+id/saveButton"
         android:layout_width="354dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="192dp"
         android:text="Save"
+        android:foregroundTint="@color/white"
+        android:outlineAmbientShadowColor="@color/white"
+        android:backgroundTint="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.561"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Content"
-        app:layout_constraintVertical_bias="0.067" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.623" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
