@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -33,7 +32,6 @@ public class PasswordSearchActivity extends AppCompatActivity {
             return insets;
         });
 
-
         searchButton = findViewById(R.id.searchB);
         searchQuery = findViewById(R.id.searchQ);
         api = new LeakAPI();
@@ -41,24 +39,48 @@ public class PasswordSearchActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
+                String password = searchQuery.getText().toString();
+                if (password.isEmpty()) {
                     Toast.makeText(PasswordSearchActivity.this,
-                            "Works " + api.search(searchQuery.getText().toString()),
+                            "Please enter a password",
                             Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    Toast.makeText(PasswordSearchActivity.this,
-                            new RuntimeException(e).getMessage().toString(),
-                            Toast.LENGTH_SHORT).show();
-
+                    return;
                 }
+
+                // Show loading message
+                Toast.makeText(PasswordSearchActivity.this,
+                        "Checking password...",
+                        Toast.LENGTH_SHORT).show();
+
+                api.search(password, new LeakAPI.LeakCheckCallback() {
+                    @Override
+                    public void onResult(final boolean isLeaked) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                String message = isLeaked
+                                        ? "This password has been leaked! Do not use it!"
+                                        : "This password hasn't been found in any leaks (but still choose a strong one!)";
+                                Toast.makeText(PasswordSearchActivity.this,
+                                        message,
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError(final Exception e) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(PasswordSearchActivity.this,
+                                        "Error: " + e.getMessage(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
             }
         });
-
-
-
-
-
-
-
     }
 }
