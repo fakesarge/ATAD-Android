@@ -152,9 +152,12 @@
         android:backgroundTint="@android:color/transparent"
         android:scaleX="2"
         android:scaleY="2"
-        app:srcCompat="@drawable/google"
-        tools:layout_editor_absoluteX="36dp"
-        tools:layout_editor_absoluteY="696dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:layout_constraintVertical_bias="0.064"
+        app:srcCompat="@drawable/google" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
