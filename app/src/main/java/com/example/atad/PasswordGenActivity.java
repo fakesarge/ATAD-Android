@@ -17,11 +17,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 public class PasswordGenActivity extends AppCompatActivity {
 
     private EditText generatedPassword;
@@ -29,6 +24,8 @@ public class PasswordGenActivity extends AppCompatActivity {
     private CheckBox uppercaseCheckbox, lowercaseCheckbox, numbersCheckbox, symbolsCheckbox;
     private SeekBar lengthSeekBar;
     private TextView lengthText;
+
+    private PasswordGen gen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +48,12 @@ public class PasswordGenActivity extends AppCompatActivity {
         symbolsCheckbox = findViewById(R.id.symbolsCheckbox);
         lengthSeekBar = findViewById(R.id.lengthSeekBar);
         lengthText = findViewById(R.id.lengthText);
+
+        // Initialize password generator
+        gen = new PasswordGen();
+
+        // Set initial length text
+        lengthText.setText("Length: " + lengthSeekBar.getProgress());
 
         // Set up seek bar listener
         lengthSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -90,61 +93,17 @@ public class PasswordGenActivity extends AppCompatActivity {
             return;
         }
 
-        String password = generateRandomPassword(length, useUpper, useLower, useNumbers, useSymbols);
-        generatedPassword.setText(password);
-    }
-
-    private String generateRandomPassword(int length, boolean useUpper, boolean useLower,
-                                          boolean useNumbers, boolean useSymbols) {
-        // Define character sets
-        String upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String lower = "abcdefghijklmnopqrstuvwxyz";
-        String numbers = "0123456789";
-        String symbols = "!@#$%^&*()_+-=[]{}|;:,.<>?";
-
-        // Build the character pool based on selected options
-        StringBuilder charPool = new StringBuilder();
-        if (useUpper) charPool.append(upper);
-        if (useLower) charPool.append(lower);
-        if (useNumbers) charPool.append(numbers);
-        if (useSymbols) charPool.append(symbols);
-
-        // Ensure at least one character from each selected set is included
-        List<Character> passwordChars = new ArrayList<>();
-        SecureRandom random = new SecureRandom();
-
-        if (useUpper) {
-            passwordChars.add(upper.charAt(random.nextInt(upper.length())));
+        try {
+            String password = gen.generatePassword(length, useUpper, useLower, useNumbers, useSymbols, true);
+            generatedPassword.setText(password);
+        } catch (IllegalArgumentException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
-        if (useLower) {
-            passwordChars.add(lower.charAt(random.nextInt(lower.length())));
-        }
-        if (useNumbers) {
-            passwordChars.add(numbers.charAt(random.nextInt(numbers.length())));
-        }
-        if (useSymbols) {
-            passwordChars.add(symbols.charAt(random.nextInt(symbols.length())));
-        }
-
-        // Fill the rest with random characters
-        while (passwordChars.size() < length) {
-            passwordChars.add(charPool.charAt(random.nextInt(charPool.length())));
-        }
-
-        // Shuffle the characters
-        Collections.shuffle(passwordChars);
-
-        // Build the final password string
-        StringBuilder password = new StringBuilder();
-        for (char c : passwordChars) {
-            password.append(c);
-        }
-
-        return password.toString();
     }
 
     private void copyPasswordToClipboard() {
         String password = generatedPassword.getText().toString();
+
         if (password.isEmpty()) {
             Toast.makeText(this, "No password to copy", Toast.LENGTH_SHORT).show();
             return;

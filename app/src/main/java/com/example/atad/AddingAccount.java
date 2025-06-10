@@ -1,62 +1,101 @@
 package com.example.atad;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-
-import androidx.activity.EdgeToEdge;
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+/**
+ * Activity for adding new password entries
+ */
 public class AddingAccount extends AppCompatActivity {
+    // UI elements
     private EditText titleEditText;
     private EditText passwordEditText;
     private Button saveButton;
 
+    // API for checking password breaches
+    private LeakAPI leakAPI;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_adding_account);
 
+        // Initialize UI components
         titleEditText = findViewById(R.id.titleEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         saveButton = findViewById(R.id.saveButton);
+        leakAPI = new LeakAPI();
 
-        saveButton.setOnClickListener(v -> saveAccount());
+        // Set up save button click listener
+        saveButton.setOnClickListener(v -> {
+            // Get user input
+            String title = titleEditText.getText().toString().trim();
+            String password = passwordEditText.getText().toString().trim();
+
+            // Validate input
+            if (title.isEmpty() || password.isEmpty()) {
+                if (title.isEmpty()) {
+                    titleEditText.setError("Please enter a website/app name");
+                }
+                if (password.isEmpty()) {
+                    passwordEditText.setError("Please enter a password");
+                }
+                return;
+            }
+
+            // Disable button during processing
+            saveButton.setEnabled(false);
+            saveButton.setText("Checking password...");
+
+            // Check if password has been breached
+            leakAPI.search(password, new LeakAPI.LeakCheckCallback() {
+                @Override
+                public void onResult(boolean isLeaked) {
+                    runOnUiThread(() -> {
+                        // Save account and return to previous screen
+                        saveAccount(title, password, isLeaked);
+                        if (isLeaked) {
+                            Toast.makeText(AddingAccount.this,
+                                    "Warning: This password has been compromised!",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    runOnUiThread(() -> {
+                        // Save anyway if check fails
+                        Toast.makeText(AddingAccount.this,
+                                "Couldn't verify password security. Saved anyway.",
+                                Toast.LENGTH_SHORT).show();
+                        saveAccount(title, password, false);
+                    });
+                }
+            });
+        });
     }
 
-    private void saveAccount() {
-        String title = titleEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
+    /**
+     * Saves account to SharedPreferences
+     */
+    private void saveAccount(String title, String password, boolean isBreached) {
+        // Get shared preferences
+        SharedPreferences sharedPreferences = getSharedPreferences("PasswordPrefs", MODE_PRIVATE);
+        int count = sharedPreferences.getInt("PasswordCount", 0);
 
-        if (!title.isEmpty() && !password.isEmpty()) {
-            // Create a new Account object
-            Account newAccount = new Account(title, password);
+        // Store account data
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("account_title_" + count, title);
+        editor.putString("account_password_" + count, password);
+        editor.putBoolean("account_breached_" + count, isBreached);
+        editor.putInt("PasswordCount", count + 1);
+        editor.apply();
 
-            // Get the existing list from SharedPreferences
-            SharedPreferences sharedPreferences = getSharedPreferences("PasswordPrefs", MODE_PRIVATE);
-            int count = sharedPreferences.getInt("PasswordCount", 0);
-
-
-            // This shared Pref is the way i saw it working the best.
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("account_title_" + count, title);
-            editor.putString("account_password_" + count, password);
-            editor.putInt("PasswordCount", count + 1);
-            editor.apply();
-
-            // Return to main activity
-            setResult(RESULT_OK);
-            finish();
-        } else {
-            if (title.isEmpty()) titleEditText.setError("Title is required");
-            if (password.isEmpty()) passwordEditText.setError("Password is required");
-        }
+        // Return to previous activity
+        setResult(RESULT_OK);
+        finish();
     }
 }
