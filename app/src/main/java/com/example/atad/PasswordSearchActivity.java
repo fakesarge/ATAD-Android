@@ -16,6 +16,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+
+/**
+ * Password search. Checks to see if password entered is leaked or not
+ */
 public class PasswordSearchActivity extends AppCompatActivity {
 
     ImageButton searchButton;
@@ -36,18 +40,23 @@ public class PasswordSearchActivity extends AppCompatActivity {
             return insets;
         });
 
+        // initialize everything
         searchButton = findViewById(R.id.searchB);
         searchQuery = findViewById(R.id.searchQ);
         leakInfoText = findViewById(R.id.textView8);
         breachStatusText = findViewById(R.id.textView9);
         breachAmountText = findViewById(R.id.textView10);
 
+
         api = new LeakAPI();
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //gets what user typed in
                 String password = searchQuery.getText().toString();
+
                 if (password.isEmpty()) {
                     Toast.makeText(PasswordSearchActivity.this,
                             "Please enter a password",
@@ -73,8 +82,9 @@ public class PasswordSearchActivity extends AppCompatActivity {
                             public void run() {
 
                                 leakInfoText.setText("Leak Found: HaveIBeenPwned.com");
-                                breachStatusText.setText("Breach Status: " + (isLeaked ? "True" : "False"));
-                                breachAmountText.setText("Breach Amount: " + (isLeaked ? "Multiple" : "0"));
+                                if(isLeaked){breachStatusText.setText("Breach Status: True");breachAmountText.setText("Breach Amount: Multiple");}
+                                if(!isLeaked){breachStatusText.setText("Breach Status: False");breachAmountText.setText("Breach Amount: 0");}
+
                             }
                         });
                     }

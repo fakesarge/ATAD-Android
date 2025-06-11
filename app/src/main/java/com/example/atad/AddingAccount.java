@@ -83,7 +83,6 @@ public class AddingAccount extends AppCompatActivity {
     /**
      * Saves account to SharedPreferences
      */
-    // In AddingAccount.java
     private void saveAccount(String title, String password, boolean isBreached) {
         String websiteUrl = ((EditText)findViewById(R.id.websiteEditText)).getText().toString().trim();
 

@@ -49,13 +49,11 @@ public class PasswordGenActivity extends AppCompatActivity {
         lengthSeekBar = findViewById(R.id.lengthSeekBar);
         lengthText = findViewById(R.id.lengthText);
 
-        // Initialize password generator
         gen = new PasswordGen();
-
-        // Set initial length text
         lengthText.setText("Length: " + lengthSeekBar.getProgress());
 
-        // Set up seek bar listener
+
+        //Listener for the length changing
         lengthSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
