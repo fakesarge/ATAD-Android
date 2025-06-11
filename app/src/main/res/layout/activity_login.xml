@@ -147,12 +147,13 @@
         app:srcCompat="@drawable/divide" />
 
     <ImageButton
-        android:id="@+id/imageButton4"
+        android:id="@+id/googlelogin"
         android:layout_width="182dp"
         android:layout_height="86dp"
         android:backgroundTint="@android:color/transparent"
         android:scaleX="2"
         android:scaleY="2"
+        android:contentDescription="@string/sign_in_with_google"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

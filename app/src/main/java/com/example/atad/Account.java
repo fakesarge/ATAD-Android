@@ -1,28 +1,27 @@
 package com.example.atad;
 
-/**
- * Represents a user account with password and breach status
- */
 public class Account {
-    private String title;       // Website/App name (e.g. "Google")
-    private String password;    // The stored password
-    private boolean isBreached; // Flag if password was found in breaches
+    private String title;
+    private String password;
+    private String websiteUrl;
+    private boolean isBreached;
 
-    // Constructor for new accounts (defaults to not breached)
-    public Account(String title, String password) {
+    // Constructor for new accounts
+    public Account(String title, String password, String websiteUrl) {
         this.title = title;
         this.password = password;
+        this.websiteUrl = websiteUrl;
         this.isBreached = false;
     }
 
-    // Constructor with explicit breach status
-    public Account(String title, String password, boolean isBreached) {
+    // Constructor with all fields - already made accounts
+    public Account(String title, String password, String websiteUrl, boolean isBreached) {
         this.title = title;
         this.password = password;
+        this.websiteUrl = websiteUrl;
         this.isBreached = isBreached;
     }
 
-    // --- Getters and Setters ---
     public String getTitle() {
         return title;
     }
@@ -31,15 +30,19 @@ public class Account {
         return password;
     }
 
+    public String getWebsiteUrl() {
+        return websiteUrl;
+    }
+
     public boolean isBreached() {
         return isBreached;
     }
+
 
     public void setBreached(boolean breached) {
         isBreached = breached;
     }
 
-    // Returns masked password for display (e.g. "•••••••••")
     public String getMaskedPassword() {
         return "•••••••••";
     }

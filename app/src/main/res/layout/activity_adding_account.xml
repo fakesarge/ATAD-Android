@@ -6,82 +6,119 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".AddingAccount">
+    tools:context=".AddingAccount"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
+
 
     <ImageView
         android:id="@+id/imageView99"
         android:layout_width="353dp"
         android:layout_height="65dp"
-        app:srcCompat="@drawable/input"
-        tools:layout_editor_absoluteX="28dp"
-        tools:layout_editor_absoluteY="340dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.431"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.427"
+        app:srcCompat="@drawable/input" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="602dp"
         android:layout_height="454dp"
+        android:layout_marginTop="-70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/logo"
-        android:layout_marginTop="-70dp"
-        />
+        app:srcCompat="@drawable/logo" />
+
+    <!-- Add this to your activity_adding_account.xml -->
+
 
     <EditText
         android:id="@+id/titleEditText"
         android:layout_width="346dp"
         android:layout_height="56dp"
         android:hint="Application Name"
-        android:textColorHint="#808493"
         android:textColor="@color/white"
+        android:textColorHint="#808493"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.446"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.416"></EditText>
+        app:layout_constraintVertical_bias="0.433"></EditText>
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="353dp"
         android:layout_height="65dp"
-        app:srcCompat="@drawable/input"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="434dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.431"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.525"
+        app:srcCompat="@drawable/input" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="353dp"
+        android:layout_height="65dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.431"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.615"
+        app:srcCompat="@drawable/input" />
 
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="346dp"
         android:layout_height="56dp"
         android:hint="Password"
-        android:textColorHint="#808493"
         android:textColor="@color/white"
+        android:textColorHint="#808493"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.446"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.53"></EditText>
+
+    <EditText
+        android:id="@+id/websiteEditText"
+        android:layout_width="346dp"
+        android:layout_height="56dp"
+        android:hint="Website Login Url"
+        android:textColor="@color/white"
+        android:textColorHint="#808493"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.384"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.619"></EditText>
 
     <Button
         android:id="@+id/saveButton"
         android:layout_width="354dp"
         android:layout_height="48dp"
-        android:text="Save"
+        android:backgroundTint="@android:color/transparent"
         android:foregroundTint="@color/white"
         android:outlineAmbientShadowColor="@color/white"
-        android:backgroundTint="@android:color/transparent"
+        android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.561"
+        app:layout_constraintHorizontal_bias="0.421"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.623" />
-
-
+        app:layout_constraintVertical_bias="0.697" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

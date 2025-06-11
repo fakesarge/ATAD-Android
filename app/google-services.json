@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "64226056020",
+    "firebase_url": "https://atad-4176b-default-rtdb.firebaseio.com",
     "project_id": "atad-4176b",
     "storage_bucket": "atad-4176b.firebasestorage.app"
   },
@@ -12,7 +13,12 @@
           "package_name": "com.example.atad"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "64226056020-lflfmsthmaghhujvlctuvp9hq3d2prt4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBqbDk0Tg7-CHqVEtEhyRNWlj2oIhVoLYI"
@@ -20,7 +26,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "64226056020-lflfmsthmaghhujvlctuvp9hq3d2prt4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

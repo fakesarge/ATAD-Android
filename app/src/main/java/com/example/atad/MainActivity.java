@@ -52,16 +52,6 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-//        try {
-//            if(api.search("password123",false))
-//            {
-//                Toast.makeText(MainActivity.this,
-//                        "Your Password has been breached please change it.",
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
 
         auth = FirebaseAuth.getInstance();
         open_password_gen = findViewById(R.id.openPassword);

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AddingAccount extends AppCompatActivity {
     // UI elements
     private EditText titleEditText;
+
     private EditText passwordEditText;
     private Button saveButton;
 
@@ -19,6 +20,7 @@ public class AddingAccount extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adding_account);
 
@@ -81,20 +83,21 @@ public class AddingAccount extends AppCompatActivity {
     /**
      * Saves account to SharedPreferences
      */
+    // In AddingAccount.java
     private void saveAccount(String title, String password, boolean isBreached) {
-        // Get shared preferences
+        String websiteUrl = ((EditText)findViewById(R.id.websiteEditText)).getText().toString().trim();
+
         SharedPreferences sharedPreferences = getSharedPreferences("PasswordPrefs", MODE_PRIVATE);
         int count = sharedPreferences.getInt("PasswordCount", 0);
 
-        // Store account data
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("account_title_" + count, title);
         editor.putString("account_password_" + count, password);
+        editor.putString("account_url_" + count, websiteUrl);
         editor.putBoolean("account_breached_" + count, isBreached);
         editor.putInt("PasswordCount", count + 1);
         editor.apply();
 
-        // Return to previous activity
         setResult(RESULT_OK);
         finish();
     }
